@@ -11,13 +11,15 @@ Proxy Manager позволяет настроить адрес прокси и �
 
 1. Скачайте (https://github.com/abyss-soft/Chrome-proxy-manager) репозиторий.
 2. Распакуйте загруженный архив в удобное место на компьютере. После распаковки папка должна содержать такие файлы и папки:
-   Chrome-proxy-manager/  
-   ├── manifest.json  
-   ├── popup.html  
-   ├── popup.js  
-   ├── background.js 
-   ├── AddData/ 
-   └── icon-файлы 
+   ```
+   Chrome-proxy-manager/
+   ├── manifest.json
+   ├── popup.html
+   ├── popup.js
+   ├── background.js
+   ├── AddData/
+   └── icon-файлы
+   ```
 
 ## Шаг 2: Включение режима разработчика в Chrome
 
