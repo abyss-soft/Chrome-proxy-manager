@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Proxy Manager",
+  "version": "1.2",
+  "description": "Менеджер для включения/отключения прокси на определенных сайтах.",
+  "homepage_url": "https://github.com/abyss-soft",
+  "permissions": ["proxy", "storage"],
+  "icons": {
+    "128": "icon-128-enabled.png",
+    "32": "icon-32.png",
+    "64": "icon-64.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Proxy Manager"
+  }
+}

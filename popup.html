@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Proxy Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 320px;
+      padding: 10px;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.4em;
+      color: #0073e6;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      text-align: center;
+      font-size: 1.2em;
+      color: #0073e6;
+      margin-bottom: 10px;
+    }
+
+    .site-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      max-height: 150px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+    }
+
+    .site-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .site-name {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .site-list li:last-child {
+      border-bottom: none;
+    }
+
+    .site-list li button {
+      flex: 0 0 auto;
+      margin-left: auto;
+      background-color: #e63946;
+      color: #fff;
+      border: none;
+      padding: 2px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+
+    .site-list li button:hover {
+      background-color: #d62828;
+    }
+
+    .site-input {
+      width: calc(100% - 22px);
+      padding: 8px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .add-site,
+    #saveProxyConfig {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      background-color: #0073e6;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    #addSite:hover,
+    #saveProxyConfig:hover {
+      background-color: #005bb5;
+    }
+
+    .switch-container {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      justify-content: space-between;
+      border: 1px solid #97b103;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    .switch-label {
+      font-size: 1em;
+      color: #333;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #e63946;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    input:disabled+.slider {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #28a745;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(18px);
+    }
+
+    .proxy-config {
+      margin-top: 15px;
+    }
+
+    .proxy-config label {
+      font-size: 0.9em;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .proxy-config input {
+      width: calc(100% - 20px);
+      padding: 6px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .proxy-config .example {
+      font-size: 0.8em;
+      color: #777;
+    }
+
+    .displayNone {
+      display: none;
+    }
+
+    .js-alert {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 15px;
+      border: 1px solid #d6e9c6;
+      border-radius: 4px;
+      color: #3c763d;
+      background-color: #dff0d8;
+    }
+
+    .js-alertError {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 15px;
+      border: 1px solid #f11762;
+      border-radius: 4px;
+      color: #f8f8f8;
+      background-color: #e02966;
+    }
+
+    .js-opacityDisplay {
+      opacity: 0.5;
+    }
+
+    .counter {
+      font-size: 14px;
+      position: relative;
+      top: 9px;
+      left: -4px;
+      color: #101183;
+      opacity: 50%;
+    }
+
+    .save {
+      background-color: #621305;
+      opacity: 80%;
+    }
+
+    .line {
+      margin-top: 9px;
+      margin-bottom: 4px;
+      border: 1px solid #d6e9c6;
+    }
+
+    .import-link {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 12px;
+      padding: 8px 12px;
+      background-color: #83bdf7;
+      color: #fff;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .import-link:hover {
+      background-color: #005bb5;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Proxy Manager</h2>
+  <a class="import-link" href="AddData/index.html" target="_blank" rel="noopener">Импорт списка из файла</a>
+  <div id="siteListContainer">
+    <h3>Список сайтов, которые будут использовать proxy </h3>
+    <span id="listProxyTitle" class="counter">0</span>
+    <ul id="siteList" class="site-list"></ul>
+    <label>
+      <input type="text" id="siteInput" class="site-input" placeholder="Добавьте сайт, например, example.com" />
+    </label>
+
+    <div id="title-use-proxy"></div>
+    <button id="addSite" class="add-site">Добавить сайт</button>
+  </div>
+  <div id="js-bypassList-proxy"></div>
+  <div class="switch-container">
+    <span class="switch-label">Прокси используется везде, кроме сайтов</span>
+    <label class="switch">
+      <input type="checkbox" id="toggleBypassList" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div id="wrapper-siteBypassList">
+    <h3>Прокси используется везде, кроме сайтов:</h3>
+    <span id="listProxyBypassTitle" class="counter">0</span>
+    <ul id="siteBypassList" class="site-list"></ul>
+  </div>
+
+
+  <label for="siteInputBypassSite">
+    <input type="text" id="siteInputBypassSite" class="site-input"
+      placeholder="Добавьте сайт, например, example.com" /></label>
+  <div id="title-no-proxy"></div>
+  <button id="addBypassSite" class="add-site">Добавить сайт</button>
+
+  <h3 id="js-activator-proxy">Прокси</h3>
+  <div class="switch-container">
+    <span class="switch-label">Активация прокси</span>
+    <label class="switch">
+      <input type="checkbox" id="toggleProxy" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="proxy-config">
+    <h3>Адрес прокси</h3>
+    <label for="proxyInput">Прокси (схема://хост:порт)</label>
+    <input type="text" id="proxyInput" placeholder="http://127.0.0.1:8080" />
+    <div class="example">Пример: http://127.0.0.1:8080</div>
+    <button id="saveProxyConfig">Сохранить</button>
+  </div>
+  <div class="line"></div>
+  <button id="saveSites" class="add-site save">Export All sites</button>
+  <script src="popup.js"></script>
+</body>
+
+</html>
