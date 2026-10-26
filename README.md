@@ -15,9 +15,9 @@ Proxy Manager позволяет настроить адрес прокси и �
    ├── manifest.json  
    ├── popup.html  
    ├── popup.js  
-   ├── background.js
-   ├── AddData/
-   └── icon-файлы
+   ├── background.js 
+   ├── AddData/ 
+   └── icon-файлы 
 
 ## Шаг 2: Включение режима разработчика в Chrome
 
